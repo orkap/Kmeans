@@ -17,6 +17,7 @@ class Observation:
 
 def main(K, N, d, MAX_ITER):
     observations_arr = []
+    clusters = []
     counter = 0
     while True:
         try:
@@ -27,6 +28,7 @@ def main(K, N, d, MAX_ITER):
                 if counter < K:
                     cluster = Cluster(values)
                     cluster.size += 1
+                    clusters.append(cluster)
                     observations_arr[counter][1] = counter
                     counter += 1
         except EOFError:
