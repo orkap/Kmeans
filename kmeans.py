@@ -40,9 +40,6 @@ def main(K, N, d, MAX_ITER):
             changeMean(indexCluster, clusters, observations_arr, d)
     iter = 1
     while iter < MAX_ITER:
-        for cluster in clusters:
-            print(cluster, " size: ", cluster.size)
-        print ("_______________")
         numOfChanges = 0
         for obsNum in range(N):
             changed = addToClosestcluster(obsNum, observations_arr, clusters, d)
