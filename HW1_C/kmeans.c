@@ -17,8 +17,9 @@ typedef struct Observation
 } Observation;
 
 void printCluster(Cluster *cluster);
-void updateMean(int indexCluster, Cluster **clusters, Observation *obs);
-int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observations);
+void addToMean(int indexCluster, Cluster **clusters, Observation *obs);
+void removeFromMean(int indexCluster, Cluster **clusters, Observation *obs);
+int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observations, int first_insert);
 double calculateDistance(Observation *observation, Cluster *cluster);
 void mainLogic (Cluster** cluster);
 void changeMean(int indexCluster, Cluster **clusters);
@@ -30,12 +31,22 @@ void printCluster(Cluster *cluster)
         printf("%.2f,",cluster->centroids[i]);
     }
 }
-
-void updateMean(int indexCluster, Cluster **clusters, Observation *obs)
-{
+void addToMean(int indexCluster, Cluster **clusters, Observation *obs) {
+    int sumObs;
     for (int i=0; i<d; ++i)
     {
-        clusters[indexCluster]->centroids[i] = clusters[indexCluster]->centroids[i] - obs->values[i];
+        sumObs = (clusters[indexCluster]->centroids[i]) * (clusters[indexCluster] ->size);
+        clusters[indexCluster]->centroids[i] = (sumObs + obs->values[i]) / ((clusters[indexCluster]->size)+1);
+    }
+}
+
+void removeFromMean(int indexCluster, Cluster **clusters, Observation *obs)
+{
+    int sumObs;
+    for (int i=0; i<d; ++i)
+    {
+        sumObs = (clusters[indexCluster]->centroids[i]) * (clusters[indexCluster] ->size);
+        clusters[indexCluster]->centroids[i] = (sumObs - obs->values[i]) / ((clusters[indexCluster]->size)-1);
     }
 }
 void changeMean(int indexCluster, Cluster **clusters)
@@ -60,33 +71,32 @@ double calculateDistance(Observation *observation, Cluster *cluster)
 }
 
 
-int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observations)
-{
-    /*
-changes = False
-min = calculateDistance(observations_arr[obsNum], clusters[0], d)
-myIndex = 0
-for indexCluster in range(1, len(clusters)): # for each cluster
-    distance = calculateDistance(observations_arr[obsNum], clusters[indexCluster], d)
-    if distance < min: # editing the nearest cluster, saving it's index and sum
-        min = distance
-        myIndex = indexCluster
-prevIndex = observations_arr[obsNum].cluster
-if prevIndex is None:
-    observations_arr[obsNum].cluster = myIndex
-    clusters[myIndex].observations.add(obsNum)
-    clusters[myIndex].size += 1
-    changes = True
-elif prevIndex!= myIndex:
-    #if clusters[prevIndex].size() != 1: # if that is the only observation in the cluster we dont want to do anything
-    clusters[myIndex].observations.add(obsNum) # add the observation number to the clusters's observation set
-    clusters[myIndex].size += 1 # edit the size of the set
-    clusters[prevIndex].observations.remove(obsNum) # remove it from its last cluster
-    clusters[prevIndex].size -= 1 # remove it from its last cluster
-    observations_arr[obsNum].cluster = myIndex # change the pointer in observations_arr to the new cluster's number
-    changes = True # we changed at least on observation so we cant exit the loop
-return changes
- */
+int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observations, int first_insert) {
+    int i, myIndex, prevIndex;
+    double min, distance;
+    min = calculateDistance(observations[obsNum], clusters[0]);
+    for (i = 1; i < K; ++i) {
+        distance = calculateDistance(observations[obsNum], clusters[i]);
+        if (distance < min) {
+            min = distance;
+            myIndex = i;
+        }
+    }
+    prevIndex = observations[obsNum]->cluster;
+    if (first_insert) {
+        observations[obsNum] -> cluster = myIndex;
+        addToMean(myIndex, clusters, observations[obsNum]);
+        clusters[myIndex]->size += 1;
+        return 1;
+
+    } else if (prevIndex != myIndex) {
+        observations[obsNum] -> cluster = myIndex;
+        addToMean(myIndex, clusters, observations[obsNum]);
+        clusters[myIndex]->size += 1;
+        removeFromMean(myIndex, clusters, observations[obsNum]);
+        clusters[prevIndex]->size -= 1;
+        return 1;
+    }
     return 0;
 }
 
@@ -119,22 +129,22 @@ return changes
         }
     }
     for (int j=K; j<N; ++j) {
-        addToClosestcluster(j, clusters, observations_arr);
+        addToClosestcluster(j, clusters, observations_arr, 1);
     }
     int iter = 1;
     int changed;
     while (iter < MAX_ITER) {
-        int numOfChanges = 0;
+        /* int numOfChanges = 0; */
         for (int obsNum=0; obsNum<N; ++obsNum) {
-            changed = addToClosestcluster(obsNum, clusters, observations_arr);
+            changed = addToClosestcluster(obsNum, clusters, observations_arr, 0);
         }
-        if (changed)
-            numOfChanges += 1;
+        /* if (changed)
+            numOfChanges += 1; */
         for(int indexCluster=0; indexCluster<K; ++indexCluster)
         {
             changeMean(indexCluster, clusters);
         }
-        if (numOfChanges == 0)
+        if (changed)
             break;
         iter += 1;
     }
