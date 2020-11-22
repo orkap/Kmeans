@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/HW1.dir/kmeans.c.obj"
-  "CMakeFiles/HW1.dir/test.c.obj"
   "HW1.exe"
   "HW1.exe.manifest"
   "HW1.pdb"

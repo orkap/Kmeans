@@ -67,10 +67,10 @@ RM = "C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\or\CLionProjects\PS\HW1
+CMAKE_SOURCE_DIR = C:\Users\or\Documents\School\SP\HW1\HW1_C
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\or\CLionProjects\PS\HW1\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\or\CLionProjects\PS\HW1\cmake-build-debug\CMakeFiles C:\Users\or\CLionProjects\PS\HW1\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug\CMakeFiles C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\or\CLionProjects\PS\HW1\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -169,33 +169,6 @@ kmeans.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/kmeans.c.s
 .PHONY : kmeans.c.s
 
-test.obj: test.c.obj
-
-.PHONY : test.obj
-
-# target to build an object file
-test.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/test.c.obj
-.PHONY : test.c.obj
-
-test.i: test.c.i
-
-.PHONY : test.i
-
-# target to preprocess a source file
-test.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/test.c.i
-.PHONY : test.c.i
-
-test.s: test.c.s
-
-.PHONY : test.s
-
-# target to generate assembly for a file
-test.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/test.c.s
-.PHONY : test.c.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -208,9 +181,6 @@ help:
 	@echo ... kmeans.obj
 	@echo ... kmeans.i
 	@echo ... kmeans.s
-	@echo ... test.obj
-	@echo ... test.i
-	@echo ... test.s
 .PHONY : help
 
 

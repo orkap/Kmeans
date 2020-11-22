@@ -19,9 +19,9 @@ typedef struct Observation
 void printCluster(Cluster *cluster);
 void addToMean(int indexCluster, Cluster **clusters, Observation *obs);
 void removeFromMean(int indexCluster, Cluster **clusters, Observation *obs);
-int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observations, int first_insert);
+int addToClosestcluster(int obsNum,Cluster **clusters, Observation *observations[N], int first_insert);
 double calculateDistance(Observation *observation, Cluster *cluster);
-void mainLogic (Cluster** cluster);
+void mainLogic (Cluster* cluster);
 void changeMean(int indexCluster, Cluster **clusters);
 
 void printCluster(Cluster *cluster)
@@ -71,7 +71,7 @@ double calculateDistance(Observation *observation, Cluster *cluster)
 }
 
 
-int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observations, int first_insert) {
+int addToClosestcluster(int obsNum,Cluster **clusters, Observation *observations[N], int first_insert) {
     int i, myIndex, prevIndex;
     double min, distance;
     min = calculateDistance(observations[obsNum], clusters[0]);
@@ -100,49 +100,50 @@ int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observation
     return 0;
 }
 
- void mainLogic (Cluster** clusters)
+ void mainLogic (Cluster* clusters)
 {
-    Observation* observations_arr[N];
+    Observation observations_arr[N];
     int counter = 0;
     double n1;
     char c;
     int i = 0;
     while (scanf("%lf%c", &n1, &c) == 2)
     {
-        if (i==0)
-            observations_arr[counter]->values = (double*) malloc((d+1) * sizeof(double));
-        observations_arr[counter]->values[i] = n1;
+        if (i==0) {
+            observations_arr[counter].values = (double*) malloc((d+1)*sizeof(double));
+        }
+        observations_arr[counter].values[i] = n1;
         if (counter<K) {
             if (i == 0) {
-                clusters[counter]->centroids = (double *) malloc((d + 1) * sizeof(double));
-                clusters[counter]->prevCentroids = (double *) malloc((d + 1) * sizeof(double));
+                clusters[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
+                clusters[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
             }
-            clusters[counter]->centroids[i] = n1;
-            clusters[counter]->prevCentroids[i] = n1;
+            clusters[counter].centroids[i] = n1;
+            clusters[counter].prevCentroids[i] = n1;
         }
         i += 1;
         if (i == d) {
-            clusters[counter]->size += 1;
-            observations_arr[counter]->cluster = counter;
+            clusters[counter].size += 1;
+            observations_arr[counter].cluster = counter;
             i = 0;
             counter += 1;
         }
     }
     for (int j=K; j<N; ++j) {
-        addToClosestcluster(j, clusters, observations_arr, 1);
+        addToClosestcluster(j, &clusters, (Observation **) observations_arr, 1);
     }
     int iter = 1;
     int changed;
     while (iter < MAX_ITER) {
         /* int numOfChanges = 0; */
         for (int obsNum=0; obsNum<N; ++obsNum) {
-            changed = addToClosestcluster(obsNum, clusters, observations_arr, 0);
+            changed = addToClosestcluster(obsNum, &clusters, (Observation **) observations_arr, 0);
         }
         /* if (changed)
             numOfChanges += 1; */
         for(int indexCluster=0; indexCluster<K; ++indexCluster)
         {
-            changeMean(indexCluster, clusters);
+            changeMean(indexCluster, &clusters);
         }
         if (changed)
             break;
@@ -150,7 +151,7 @@ int addToClosestcluster(int obsNum,Cluster **clusters, Observation **observation
     }
 }
 
-int main1(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     K = atoi(argv[1]);
     N = atoi(argv[2]);
@@ -166,11 +167,11 @@ int main1(int argc, char* argv[])
         exit(-1);
     }
 
-    Cluster* clusters[K];
+    Cluster clusters[K];
     mainLogic(clusters);
     for (int i=0; i<K; ++i)
     {
-        printCluster(clusters[i]);
+        printCluster(&clusters[i]);
         if (i!=K)
             printf("\n");
     }
