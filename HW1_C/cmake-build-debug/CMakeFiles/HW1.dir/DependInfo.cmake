@@ -4,8 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/or/CLionProjects/PS/HW1/kmeans.c" "C:/Users/or/CLionProjects/PS/HW1/cmake-build-debug/CMakeFiles/HW1.dir/kmeans.c.obj"
-  "C:/Users/or/CLionProjects/PS/HW1/test.c" "C:/Users/or/CLionProjects/PS/HW1/cmake-build-debug/CMakeFiles/HW1.dir/test.c.obj"
+  "C:/Users/or/Documents/School/SP/HW1/HW1_C/kmeans.c" "C:/Users/or/Documents/School/SP/HW1/HW1_C/cmake-build-debug/CMakeFiles/HW1.dir/kmeans.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
