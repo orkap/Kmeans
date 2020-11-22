@@ -21,7 +21,7 @@ void addToMean(int indexCluster, Cluster **clusters, Observation *obs);
 void removeFromMean(int indexCluster, Cluster **clusters, Observation *obs);
 int addToClosestcluster(int obsNum,Cluster **clusters, Observation *observations[N], int first_insert);
 double calculateDistance(Observation *observation, Cluster *cluster);
-void mainLogic (Cluster* cluster);
+void mainLogic ();
 void changeMean(int indexCluster, Cluster **clusters);
 
 void printCluster(Cluster *cluster)
@@ -100,8 +100,9 @@ int addToClosestcluster(int obsNum,Cluster **clusters, Observation *observations
     return 0;
 }
 
- void mainLogic (Cluster* clusters)
+ void mainLogic ()
 {
+    Cluster clusters[K];
     Observation observations_arr[N];
     int counter = 0;
     double n1;
@@ -117,6 +118,7 @@ int addToClosestcluster(int obsNum,Cluster **clusters, Observation *observations
             if (i == 0) {
                 clusters[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
                 clusters[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
+                clusters[counter].size = 1;
             }
             clusters[counter].centroids[i] = n1;
             clusters[counter].prevCentroids[i] = n1;
@@ -149,6 +151,12 @@ int addToClosestcluster(int obsNum,Cluster **clusters, Observation *observations
             break;
         iter += 1;
     }
+    for (i=0; i<K; ++i)
+    {
+        printCluster(&clusters[i]);
+        if (i!=K)
+            printf("\n");
+    }
 }
 
 int main(int argc, char* argv[])
@@ -167,6 +175,7 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
+<<<<<<< Updated upstream
     Cluster clusters[K];
     mainLogic(clusters);
     for (int i=0; i<K; ++i)
@@ -175,5 +184,9 @@ int main(int argc, char* argv[])
         if (i!=K)
             printf("\n");
     }
+=======
+    mainLogic();
+
+>>>>>>> Stashed changes
     return 0;
 }
