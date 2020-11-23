@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 int K, N, d, MAX_ITER;
 
@@ -106,6 +107,7 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
  void mainLogic (Cluster *clusters)
 {
     Observation* observations_arr = malloc(N * sizeof(struct Observation));
+    assert(observations_arr != NULL);
     int counter = 0;
     double n1;
     char c;
@@ -114,6 +116,7 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
     {
         if (i==0) {
             observations_arr[counter].values = (double*) malloc((d+1)*sizeof(double));
+            assert(observations_arr[counter].values != NULL);
         }
         observations_arr[counter].values[i] = n1;
         if (counter<K) {
@@ -121,7 +124,9 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
                 clusters[counter].size = 1;
                 observations_arr[counter].cluster = counter;
                 clusters[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
+                assert(clusters[counter].centroids != NULL);
                 clusters[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
+                assert(clusters[counter].prevCentroids != NULL);
                 clusters[counter].size = 1;
             }
             clusters[counter].centroids[i] = n1;
@@ -166,6 +171,7 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
 
 int main(int argc, char* argv[])
 {
+    assert(argc>=5);
     int i;
     K = atoi(argv[1]);
     N = atoi(argv[2]);
