@@ -1,3 +1,3 @@
-C:/Users/or/Documents/School/SP/HW1/HW1_C/cmake-build-debug/CMakeFiles/HW1.dir
-C:/Users/or/Documents/School/SP/HW1/HW1_C/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/or/Documents/School/SP/HW1/HW1_C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/user/Desktop/TAU/third_year/Computer_Science/SP/HW/HW1/Kmeans/HW1_C/cmake-build-debug/CMakeFiles/HW1.dir
+C:/Users/user/Desktop/TAU/third_year/Computer_Science/SP/HW/HW1/Kmeans/HW1_C/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/user/Desktop/TAU/third_year/Computer_Science/SP/HW/HW1/Kmeans/HW1_C/cmake-build-debug/CMakeFiles/rebuild_cache.dir

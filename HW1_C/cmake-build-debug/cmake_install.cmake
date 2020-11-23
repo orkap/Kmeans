@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/or/Documents/School/SP/HW1/HW1_C
+# Install script for directory: C:/Users/user/Desktop/TAU/third_year/Computer_Science/SP/HW/HW1/Kmeans/HW1_C
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/or/Documents/School/SP/HW1/HW1_C/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/user/Desktop/TAU/third_year/Computer_Science/SP/HW/HW1/Kmeans/HW1_C/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
