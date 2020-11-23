@@ -27,7 +27,8 @@ void changeMean(Cluster *cluster);
 
 void printCluster(Cluster *cluster)
 {
-    for (int i=0; i<d; ++i)
+    int i;
+    for (i=0; i<d; ++i)
     {
         if (i==d-1)
             printf("%.2f",cluster->prevCentroids[i]);
@@ -36,8 +37,9 @@ void printCluster(Cluster *cluster)
     }
 }
 void addToMean(Cluster *cluster, Observation *obs) {
+    int i;
     double sumObs;
-    for (int i=0; i<d; ++i)
+    for (i=0; i<d; ++i)
     {
         sumObs = (cluster->centroids[i]) * (cluster ->size);
         cluster->centroids[i] = (sumObs + obs->values[i]) / ((cluster->size)+1);
@@ -46,8 +48,9 @@ void addToMean(Cluster *cluster, Observation *obs) {
 
 void removeFromMean(Cluster *cluster, Observation *obs)
 {
+    int i;
     double sumObs;
-    for (int i=0; i<d; ++i)
+    for (i=0; i<d; ++i)
     {
         sumObs = (cluster->centroids[i]) * (cluster ->size);
         cluster->centroids[i] = (sumObs - obs->values[i]) / ((cluster->size)-1);
@@ -55,7 +58,8 @@ void removeFromMean(Cluster *cluster, Observation *obs)
 }
 void changeMean(Cluster *cluster)
 {
-    for (int i=0; i<d; ++i)
+    int i;
+    for (i=0; i<d; ++i)
     {
         cluster->prevCentroids[i] = cluster->centroids[i];
     }
@@ -63,9 +67,10 @@ void changeMean(Cluster *cluster)
 
 double calculateDistance(Observation *observation, Cluster *cluster)
 {
+    int i;
     double distance;
     double sum = 0.0f;
-        for (int i=0; i<d; ++i)
+        for (i=0; i<d; ++i)
         {
             distance = (cluster->prevCentroids[i] - observation->values[i]);
             distance = distance * distance;
@@ -138,25 +143,26 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
             counter += 1;
         }
     }
-    for (int j=K; j<N; ++j) {
+    int j;
+    for (j=K; j<N; ++j) {
         addToClosestcluster(clusters, &observations_arr[j], 1);
     }
-    for(int indexCluster=0; indexCluster<K; ++indexCluster)
+    for(j=0; j<K; ++j)
     {
-        changeMean(&clusters[indexCluster]);
+        changeMean(&clusters[j]);
     }
     int iter = 1;
     int anyoneChanged;
     while (iter < MAX_ITER) {
         anyoneChanged = 0;
-        for (int obsNum=0; obsNum<N; ++obsNum) {
-            int changed = addToClosestcluster(clusters, &observations_arr[obsNum], 0);
+        for (j=0; j<N; ++j) {
+            int changed = addToClosestcluster(clusters, &observations_arr[j], 0);
             if (changed)
                 anyoneChanged = 1;
         }
-        for(int indexCluster=0; indexCluster<K; ++indexCluster)
+        for(j=0; j<K; ++j)
         {
-            changeMean(&clusters[indexCluster]);
+            changeMean(&clusters[j]);
         }
         if (!anyoneChanged)
             break;
