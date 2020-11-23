@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
     if args.K is None or args.N is None or args.d is None or args.MAX_ITER is None:
         sys.exit('Not all required arguments were passed')
-    elif args.K > args.N:
+    elif int(args.K) > int(args.N):
         sys.exit('Can\'t have more clusters than observations')
     else:
         results = main(int(args.K), int(args.N), int(args.d), int(args.MAX_ITER))

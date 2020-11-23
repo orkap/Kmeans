@@ -67,24 +67,13 @@ RM = "C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\user\Desktop\TAU\third_year\Computer_Science\SP\HW\HW1\Kmeans\HW1_C
+CMAKE_SOURCE_DIR = C:\Users\or\Documents\School\SP\HW1\HW1_C
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\user\Desktop\TAU\third_year\Computer_Science\SP\HW\HW1\Kmeans\HW1_C\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available."
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -97,11 +86,22 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	"C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\user\Desktop\TAU\third_year\Computer_Science\SP\HW\HW1\Kmeans\HW1_C\cmake-build-debug\CMakeFiles C:\Users\user\Desktop\TAU\third_year\Computer_Science\SP\HW\HW1\Kmeans\HW1_C\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug\CMakeFiles C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\user\Desktop\TAU\third_year\Computer_Science\SP\HW\HW1\Kmeans\HW1_C\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\or\Documents\School\SP\HW1\HW1_C\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -130,17 +130,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named HW1
+# Target rules for targets named HW1_C
 
 # Build rule for target.
-HW1: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 HW1
-.PHONY : HW1
+HW1_C: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 HW1_C
+.PHONY : HW1_C
 
 # fast build rule for target.
-HW1/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/build
-.PHONY : HW1/fast
+HW1_C/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1_C.dir\build.make CMakeFiles/HW1_C.dir/build
+.PHONY : HW1_C/fast
 
 kmeans.obj: kmeans.c.obj
 
@@ -148,7 +148,7 @@ kmeans.obj: kmeans.c.obj
 
 # target to build an object file
 kmeans.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/kmeans.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1_C.dir\build.make CMakeFiles/HW1_C.dir/kmeans.c.obj
 .PHONY : kmeans.c.obj
 
 kmeans.i: kmeans.c.i
@@ -157,7 +157,7 @@ kmeans.i: kmeans.c.i
 
 # target to preprocess a source file
 kmeans.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/kmeans.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1_C.dir\build.make CMakeFiles/HW1_C.dir/kmeans.c.i
 .PHONY : kmeans.c.i
 
 kmeans.s: kmeans.c.s
@@ -166,7 +166,7 @@ kmeans.s: kmeans.c.s
 
 # target to generate assembly for a file
 kmeans.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1.dir\build.make CMakeFiles/HW1.dir/kmeans.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\HW1_C.dir\build.make CMakeFiles/HW1_C.dir/kmeans.c.s
 .PHONY : kmeans.c.s
 
 # Help Target
@@ -177,7 +177,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... HW1
+	@echo ... HW1_C
 	@echo ... kmeans.obj
 	@echo ... kmeans.i
 	@echo ... kmeans.s
