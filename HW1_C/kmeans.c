@@ -122,6 +122,7 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
                 observations_arr[counter].cluster = counter;
                 clusters[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
                 clusters[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
+                clusters[counter].size = 1;
             }
             clusters[counter].centroids[i] = n1;
             clusters[counter].prevCentroids[i] = n1;
