@@ -41,8 +41,6 @@ def main(K, N, d, MAX_ITER):
 
     iter = 1
     while iter < MAX_ITER:
-        for clusteri in clusters:
-            print(clusteri.size, clusteri.observations, clusteri.centroids)
         numOfChanges = 0
         for obsNum in range(N):
             changed = addToClosestcluster(obsNum, observations_arr, clusters, d)
