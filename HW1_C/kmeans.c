@@ -80,13 +80,13 @@ double calculateDistance(Observation *observation, Cluster *cluster)
 }
 
 
-int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) {
+int addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_insert) {
     int i, myIndex, prevIndex;
     double min, distance;
-    min = calculateDistance(obs, clusters);
+    min = calculateDistance(obs, clusters_arr);
     myIndex = 0;
     for (i = 1; i < K; ++i) {
-        distance = calculateDistance(obs, &clusters[i]);
+        distance = calculateDistance(obs, &clusters_arr[i]);
         if (distance < min) {
             min = distance;
             myIndex = i;
@@ -95,28 +95,31 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
     prevIndex = (*obs).cluster;
     if (first_insert) {
         (*obs).cluster = myIndex;
-        addToMean(clusters +myIndex, obs);
-        clusters[myIndex].size += 1;
+        addToMean(clusters_arr +myIndex, obs);
+        clusters_arr[myIndex].size += 1;
         return 1;
     } else if (prevIndex != myIndex) {
         (*obs).cluster = myIndex;
-        addToMean(clusters+myIndex, obs);
-        clusters[myIndex].size += 1;
-        removeFromMean(clusters+prevIndex, obs);
-        clusters[prevIndex].size -= 1;
+        addToMean(clusters_arr+myIndex, obs);
+        clusters_arr[myIndex].size += 1;
+        removeFromMean(clusters_arr+prevIndex, obs);
+        clusters_arr[prevIndex].size -= 1;
         return 1;
     }
     return 0;
 }
 
- void mainLogic (Cluster *clusters)
+ void mainLogic (Cluster *clusters_arr)
 {
-    Observation* observations_arr = malloc(N * sizeof(struct Observation));
-    assert(observations_arr != NULL);
     int counter = 0;
     double n1;
     char c;
     int i = 0;
+    int iter = 1;
+    int anyoneChanged;
+    int j;
+    Observation* observations_arr = malloc(N * sizeof(Observation));
+    assert(observations_arr != NULL);
     while (scanf("%lf%c", &n1, &c) == 2)
     {
         if (i==0) {
@@ -126,16 +129,16 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
         observations_arr[counter].values[i] = n1;
         if (counter<K) {
             if (i == 0) {
-                clusters[counter].size = 1;
+                clusters_arr[counter].size = 1;
                 observations_arr[counter].cluster = counter;
-                clusters[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
-                assert(clusters[counter].centroids != NULL);
-                clusters[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
-                assert(clusters[counter].prevCentroids != NULL);
-                clusters[counter].size = 1;
+                clusters_arr[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
+                assert(clusters_arr[counter].centroids != NULL);
+                clusters_arr[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
+                assert(clusters_arr[counter].prevCentroids != NULL);
+                clusters_arr[counter].size = 1;
             }
-            clusters[counter].centroids[i] = n1;
-            clusters[counter].prevCentroids[i] = n1;
+            clusters_arr[counter].centroids[i] = n1;
+            clusters_arr[counter].prevCentroids[i] = n1;
         }
         i += 1;
         if (i == d) {
@@ -143,26 +146,24 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
             counter += 1;
         }
     }
-    int j;
     for (j=K; j<N; ++j) {
-        addToClosestcluster(clusters, &observations_arr[j], 1);
+        addToClosestcluster(clusters_arr, &observations_arr[j], 1);
     }
     for(j=0; j<K; ++j)
     {
-        changeMean(&clusters[j]);
+        changeMean(&clusters_arr[j]);
     }
-    int iter = 1;
-    int anyoneChanged;
+
     while (iter < MAX_ITER) {
         anyoneChanged = 0;
         for (j=0; j<N; ++j) {
-            int changed = addToClosestcluster(clusters, &observations_arr[j], 0);
+            int changed = addToClosestcluster(clusters_arr, &observations_arr[j], 0);
             if (changed)
                 anyoneChanged = 1;
         }
         for(j=0; j<K; ++j)
         {
-            changeMean(&clusters[j]);
+            changeMean(&clusters_arr[j]);
         }
         if (!anyoneChanged)
             break;
@@ -171,14 +172,15 @@ int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert) 
     for (i=0; i<N; ++i)
     {
         free(observations_arr[i].values);
-        free(&observations_arr[i]);
     }
+    free(observations_arr);
 }
 
 int main(int argc, char* argv[])
 {
-    assert(argc>=5);
     int i;
+    Cluster *clusters_arr;
+    assert(argc>=5);
     K = atoi(argv[1]);
     N = atoi(argv[2]);
     d = atoi(argv[3]);
@@ -193,19 +195,19 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
-    Cluster clusters[K];
-    mainLogic(clusters);
+    clusters_arr = malloc(K * sizeof(Cluster));
+    mainLogic(clusters_arr);
     for (i=0; i<K; ++i)
     {
-        printCluster(&clusters[i]);
+        printCluster(&clusters_arr[i]);
         if (i!=K)
             printf("\n");
     }
     for (i=0; i<K; ++i)
     {
-        free(clusters[i].centroids);
-        free(clusters[i].prevCentroids);
-        free(&clusters[i]);
+        free(clusters_arr[i].centroids);
+        free(clusters_arr[i].prevCentroids);
     }
+    free(clusters_arr);
     return 0;
 }
