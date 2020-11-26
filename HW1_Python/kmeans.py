@@ -124,6 +124,8 @@ if __name__ == "__main__":
         sys.exit('Not all required arguments were passed')
     elif int(args.K) > int(args.N):
         sys.exit('Can\'t have more clusters than observations')
+    elif int(args.K) <= 0 or int(args.d) <= 0 or int(args.MAX_ITER) <= 0:
+        sys.exit('One of the arguments is zero or less')
     else:
         results = main(int(args.K), int(args.N), int(args.d), int(args.MAX_ITER))
 
