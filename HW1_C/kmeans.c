@@ -124,7 +124,7 @@ void addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_inse
     while (scanf("%lf%c", &n1, &c) == 2)
     {
         if (i==0) {
-            observations_arr[counter].values = (double*) malloc((d+1)*sizeof(double));
+            observations_arr[counter].values = (double*) malloc(d * sizeof(double));
             assert(observations_arr[counter].values != NULL);
         }
         observations_arr[counter].values[i] = n1;
@@ -132,9 +132,9 @@ void addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_inse
             if (i == 0) {
                 clusters_arr[counter].size = 1;
                 observations_arr[counter].cluster = counter;
-                clusters_arr[counter].centroids = (double *) malloc((d + 1) * sizeof(double));
+                clusters_arr[counter].centroids = (double *) malloc(d * sizeof(double));
                 assert(clusters_arr[counter].centroids != NULL);
-                clusters_arr[counter].prevCentroids = (double *) malloc((d + 1) * sizeof(double));
+                clusters_arr[counter].prevCentroids = (double *) malloc(d * sizeof(double));
                 assert(clusters_arr[counter].prevCentroids != NULL);
                 clusters_arr[counter].size = 1;
             }
