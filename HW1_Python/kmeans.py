@@ -5,7 +5,6 @@ import sys
 class Cluster:
     def __init__(self, dValues):
         self.size = 0
-        # self.observations = set()
         self.centroids = [float(value) for value in dValues]
         self.prevCentroids = [float(value) for value in dValues]
 
@@ -26,32 +25,36 @@ def main(K, N, d, MAX_ITER):
         try:
             for line in input().split('\n'):
                 values = line.split(',')
-                observation = Observation(values, None)
-                observations_arr.append(observation)
+                # observation = Observation(values, None)
+                # observations_arr.append(observation)
                 if counter < K:
+                    observation = Observation(values, counter)
+                    observations_arr.append(observation)
                     cluster = Cluster(values)
                     clusters.append(cluster)
-                    # cluster.observations.add(counter)
                     cluster.size += 1
-                    observations_arr[counter].cluster = counter
+                    # observations_arr[counter].cluster = counter
                     counter += 1
+                else:
+                    observation = Observation(values, None)
+                    observations_arr.append(observation)
         except EOFError:
             break
     for i in range(K, N):
-        addToClosestcluster(i, observations_arr, clusters, d)
-    for indexCluster in range(len(clusters)):
+        addToClosestcluster(i, observations_arr, clusters, d, K)
+    for indexCluster in range(K):
         changeMean(indexCluster, clusters, d)
 
     iter = 1
     while iter < MAX_ITER:
-        numOfChanges = 0
+        is_changed = False
         for obsNum in range(N):
-            changed = addToClosestcluster(obsNum, observations_arr, clusters, d)
+            changed = addToClosestcluster(obsNum, observations_arr, clusters, d, K)
             if changed:
-                numOfChanges += 1
-        for indexCluster in range(len(clusters)):
+                is_changed = True
+        for indexCluster in range(K):
             changeMean(indexCluster, clusters, d)
-        if numOfChanges == 0:
+        if not is_changed:
             break
         iter += 1
     return (clusters)
@@ -59,15 +62,16 @@ def main(K, N, d, MAX_ITER):
 def calculateDistance(observation, cluster, d):
     sum = 0
     for indexD in range(d):  # for each centroid in the cluster we will calculate the distance
-        distance = (cluster.prevCentroids[indexD] - observation.values[indexD]) ** 2
+        distance = (cluster.prevCentroids[indexD] - observation.values[indexD])
+        distance *= distance
         sum += distance
     return sum
 
-def addToClosestcluster(obsNum,observations_arr, clusters, d):
-    changes = False
+def addToClosestcluster(obsNum,observations_arr, clusters, d, K):
+    # changes = False
     min = calculateDistance(observations_arr[obsNum], clusters[0], d)
     myIndex = 0
-    for indexCluster in range(1, len(clusters)): # for each cluster
+    for indexCluster in range(1, K): # for each cluster
         distance = calculateDistance(observations_arr[obsNum], clusters[indexCluster], d)
         if distance < min: # editing the nearest cluster, saving it's index and sum
             min = distance
@@ -76,20 +80,17 @@ def addToClosestcluster(obsNum,observations_arr, clusters, d):
     if prevIndex is None:
         observations_arr[obsNum].cluster = myIndex
         addToMean(clusters[myIndex], obsNum, observations_arr, d)
-        # clusters[myIndex].observations.add(obsNum)
         clusters[myIndex].size += 1
-        changes = True
+        return True
     elif prevIndex != myIndex:
         #if clusters[prevIndex].size() != 1: # if that is the only observation in the cluster we dont want to do anything
-        # clusters[myIndex].observations.add(obsNum) # add the observation number to the clusters's observation set
         addToMean(clusters[myIndex], obsNum, observations_arr, d)
         clusters[myIndex].size += 1 # edit the size of the set
         removeFromMean(clusters[prevIndex], obsNum, observations_arr, d)
-        # clusters[prevIndex].observations.remove(obsNum) # remove it from its last cluster
         clusters[prevIndex].size -= 1 # remove it from its last cluster
         observations_arr[obsNum].cluster = myIndex # change the pointer in observations_arr to the new cluster's number
-        changes = True # we changed at least on observation so we cant exit the loop
-    return changes
+        return True# we changed at least on observation so we cant exit the loop
+    return False
 
 def addToMean(cluster, obsNum, observations_arr, d):
     for indexD in range(d):
@@ -99,17 +100,11 @@ def addToMean(cluster, obsNum, observations_arr, d):
 def removeFromMean(cluster, obsNum, observations_arr, d):
     for indexD in range(d):
         sum = cluster.centroids[indexD] * cluster.size
-        # if clusters[]
         cluster.centroids[indexD] = (sum - observations_arr[obsNum].values[indexD]) / (cluster.size-1)
 
 def changeMean(indexCluster, clusters, d):
     for indexD in range(d):
         clusters[indexCluster].prevCentroids[indexD] = clusters[indexCluster].centroids[indexD]
-        # sum = 0
-        # for obsNum in clusters[indexCluster].observations:
-        #     sum += observations_arr[obsNum].values[indexD]
-        # sum /= clusters[indexCluster].size
-        # clusters[indexCluster].centroids[indexD] = sum
 
 
 if __name__ == "__main__":
