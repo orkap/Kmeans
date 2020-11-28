@@ -36,12 +36,10 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/HW1_C.dir/kmeans.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/HW1_C.dir/kmeans.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/HW1_C.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/HW1_C.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/HW1_C.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/HW1_C.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kmeans.c" beforeDir="false" afterPath="$PROJECT_DIR$/kmeans.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HW1_Python/kmeans.py" beforeDir="false" afterPath="$PROJECT_DIR$/../HW1_Python/kmeans.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,9 +66,19 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
-    <configuration name="HW1_C" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="15 100 7 10" REDIRECT_INPUT="true" REDIRECT_INPUT_PATH="$PROJECT_DIR$/../input_100_7.txt" PASS_PARENT_ENVS_2="true" PROJECT_NAME="HW1_C" TARGET_NAME="HW1_C" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="HW1_C" RUN_TARGET_NAME="HW1_C">
+    <configuration name="HW1_C" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="3 6 3 100" REDIRECT_INPUT="true" REDIRECT_INPUT_PATH="$PROJECT_DIR$/../input_6_3.txt" PASS_PARENT_ENVS_2="true" PROJECT_NAME="HW1_C" TARGET_NAME="HW1_C" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="HW1_C" RUN_TARGET_NAME="HW1_C">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -84,6 +92,7 @@
       <updated>1606154409547</updated>
       <workItem from="1606154411137" duration="241000" />
       <workItem from="1606334549134" duration="618000" />
+      <workItem from="1606593214527" duration="270000" />
     </task>
     <servers />
   </component>
@@ -100,10 +109,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2129" y="-681" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606334580266">
-      <screen x="1920" y="-730" width="1440" height="819" />
+    <state x="223" y="47" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606593485657">
+      <screen x="0" y="0" width="1536" height="783" />
     </state>
-    <state x="223" y="47" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.783/1920.-730.1440.819@0.0.1536.783" timestamp="1606154655249" />
+    <state x="223" y="47" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.783/1920.-730.1440.819@0.0.1536.783" timestamp="1606593485657" />
     <state x="2129" y="-681" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.783/1920.-730.1440.819@1920.-730.1440.819" timestamp="1606334580266" />
     <state width="1397" height="258" key="GridCell.Tab.0.bottom" timestamp="1606332869576">
       <screen x="1920" y="-730" width="1440" height="819" />

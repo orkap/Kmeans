@@ -20,10 +20,10 @@ typedef struct Observation
 void printCluster(Cluster *cluster);
 void addToMean(Cluster *cluster, Observation *obs);
 void removeFromMean(Cluster *cluster, Observation *obs);
-int addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert);
+void addToClosestcluster(Cluster *clusters, Observation * obs, int first_insert);
 double calculateDistance(Observation *observation, Cluster *cluster);
 void mainLogic (Cluster* cluster);
-void changeMean(Cluster *cluster);
+int changeMean(Cluster *cluster);
 
 void printCluster(Cluster *cluster)
 {
@@ -56,13 +56,17 @@ void removeFromMean(Cluster *cluster, Observation *obs)
         cluster->centroids[i] = (sumObs - obs->values[i]) / ((cluster->size)-1);
     }
 }
-void changeMean(Cluster *cluster)
+int changeMean(Cluster *cluster)
 {
+    int changed = 0;
     int i;
     for (i=0; i<d; ++i)
     {
+        if (cluster->prevCentroids[i] != cluster->centroids[i])
+            changed = 1;
         cluster->prevCentroids[i] = cluster->centroids[i];
     }
+    return changed;
 }
 
 double calculateDistance(Observation *observation, Cluster *cluster)
@@ -80,7 +84,7 @@ double calculateDistance(Observation *observation, Cluster *cluster)
 }
 
 
-int addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_insert) {
+void addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_insert) {
     int i, myIndex, prevIndex;
     double min, distance;
     min = calculateDistance(obs, clusters_arr);
@@ -97,16 +101,13 @@ int addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_inser
         (*obs).cluster = myIndex;
         addToMean(clusters_arr +myIndex, obs);
         clusters_arr[myIndex].size += 1;
-        return 1;
     } else if (prevIndex != myIndex) {
         (*obs).cluster = myIndex;
         addToMean(clusters_arr+myIndex, obs);
         clusters_arr[myIndex].size += 1;
         removeFromMean(clusters_arr+prevIndex, obs);
         clusters_arr[prevIndex].size -= 1;
-        return 1;
     }
-    return 0;
 }
 
  void mainLogic (Cluster *clusters_arr)
@@ -153,17 +154,16 @@ int addToClosestcluster(Cluster *clusters_arr, Observation *obs, int first_inser
     {
         changeMean(&clusters_arr[j]);
     }
-
     while (iter < MAX_ITER) {
         anyoneChanged = 0;
         for (j=0; j<N; ++j) {
-            int changed = addToClosestcluster(clusters_arr, &observations_arr[j], 0);
-            if (changed)
-                anyoneChanged = 1;
+            addToClosestcluster(clusters_arr, &observations_arr[j], 0);
         }
         for(j=0; j<K; ++j)
         {
-            changeMean(&clusters_arr[j]);
+            int changed = changeMean(&clusters_arr[j]);
+            if (changed)
+                anyoneChanged = 1;
         }
         if (!anyoneChanged)
             break;
