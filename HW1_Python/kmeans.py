@@ -49,11 +49,11 @@ def main(K, N, d, MAX_ITER):
     while iter < MAX_ITER:
         is_changed = False
         for obsNum in range(N):
-            changed = addToClosestcluster(obsNum, observations_arr, clusters, d, K)
+            addToClosestcluster(obsNum, observations_arr, clusters, d, K)
+        for indexCluster in range(K):
+            changed = changeMean(indexCluster, clusters, d)
             if changed:
                 is_changed = True
-        for indexCluster in range(K):
-            changeMean(indexCluster, clusters, d)
         if not is_changed:
             break
         iter += 1
@@ -81,7 +81,6 @@ def addToClosestcluster(obsNum,observations_arr, clusters, d, K):
         observations_arr[obsNum].cluster = myIndex
         addToMean(clusters[myIndex], obsNum, observations_arr, d)
         clusters[myIndex].size += 1
-        return True
     elif prevIndex != myIndex:
         #if clusters[prevIndex].size() != 1: # if that is the only observation in the cluster we dont want to do anything
         addToMean(clusters[myIndex], obsNum, observations_arr, d)
@@ -89,8 +88,6 @@ def addToClosestcluster(obsNum,observations_arr, clusters, d, K):
         removeFromMean(clusters[prevIndex], obsNum, observations_arr, d)
         clusters[prevIndex].size -= 1 # remove it from its last cluster
         observations_arr[obsNum].cluster = myIndex # change the pointer in observations_arr to the new cluster's number
-        return True# we changed at least on observation so we cant exit the loop
-    return False
 
 def addToMean(cluster, obsNum, observations_arr, d):
     for indexD in range(d):
@@ -103,9 +100,12 @@ def removeFromMean(cluster, obsNum, observations_arr, d):
         cluster.centroids[indexD] = (sum - observations_arr[obsNum].values[indexD]) / (cluster.size-1)
 
 def changeMean(indexCluster, clusters, d):
+    changed = False
     for indexD in range(d):
+        if (clusters[indexCluster].prevCentroids[indexD] != clusters[indexCluster].centroids[indexD]):
+            changed = True
         clusters[indexCluster].prevCentroids[indexD] = clusters[indexCluster].centroids[indexD]
-
+    return changed
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -116,13 +116,25 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.K is None or args.N is None or args.d is None or args.MAX_ITER is None:
-        sys.exit('Not all required arguments were passed')
-    elif int(args.K) > int(args.N):
-        sys.exit('Can\'t have more clusters than observations')
-    elif int(args.K) <= 0 or int(args.d) <= 0 or int(args.MAX_ITER) <= 0:
-        sys.exit('One of the arguments is zero or less')
+        print('Not all required arguments were passed')
+        quit()
+    K = int(args.K)
+    N = int(args.N)
+    d = int(args.d)
+    MAX_ITER = int(args.MAX_ITER)
+
+    assert(K > 0 and N > 0 and d > 0 and MAX_ITER > 0)
+    assert(K < N)
+    results = main(K, N, d, MAX_ITER)
+    '''
+    if K <= 0 or N <= 0 or d <= 0 or MAX_ITER <= 0:
+        print('Not all required arguments are valid')
+        quit()
+    elif K > N:
+        print('Can\'t have more clusters than observations')
+        quit()
     else:
         results = main(int(args.K), int(args.N), int(args.d), int(args.MAX_ITER))
-
+    '''
     for cluster in results:
         print(cluster)

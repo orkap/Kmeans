@@ -185,9 +185,9 @@ int main(int argc, char* argv[])
     N = atoi(argv[2]);
     d = atoi(argv[3]);
     MAX_ITER = atoi(argv[4]);
-    if (K==0 || N==0 || d==0 || MAX_ITER==0)
+    if (K<=0 || N<=0 || d<=0 || MAX_ITER<=0)
     {
-        printf("Not all required arguments were passed\n");
+        printf("Not all required arguments are valid\n");
         exit(-1);
     }
     else if (K > N) {
