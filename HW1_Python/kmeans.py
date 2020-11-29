@@ -1,6 +1,4 @@
 import argparse
-import sys
-
 
 class Cluster:
     def __init__(self, dValues):
@@ -122,19 +120,14 @@ if __name__ == "__main__":
     N = int(args.N)
     d = int(args.d)
     MAX_ITER = int(args.MAX_ITER)
-
-    assert(K > 0 and N > 0 and d > 0 and MAX_ITER > 0)
-    assert(K < N)
-    results = main(K, N, d, MAX_ITER)
-    '''
     if K <= 0 or N <= 0 or d <= 0 or MAX_ITER <= 0:
         print('Not all required arguments are valid')
-        quit()
+        exit(1)
     elif K > N:
         print('Can\'t have more clusters than observations')
-        quit()
+        exit(1)
     else:
         results = main(int(args.K), int(args.N), int(args.d), int(args.MAX_ITER))
-    '''
+
     for cluster in results:
         print(cluster)
